@@ -1,64 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
-import { Button, TextField, Heading, Text } from '@radix-ui/themes'
-
-type LineCommentProps = {
-  text: string,
-  time: string
-}
-
-function LineComment ({ text, time }: LineCommentProps) {
-  return (
-    <div className='linecomment'>
-      <div className='linecommentframe'>
-        <div className='linecommenttext'>{text}</div>
-      </div>
-      <div className='linetime'>{time}</div>
-    </div>
-  )
-}
-
-function createLineElement(...lineComments: HTMLElement[]) {
-  const root = document.createElement('div');
-  root.style.display = 'flex';
-
-  const lineRoot = document.createElement('div');
-  lineRoot.classList.add('lineroot');
-
-  for(const commentElement of lineComments) {
-    lineRoot.appendChild(commentElement);
-  }
-
-  const margin = document.createElement('div');
-  margin.style.flexGrow = '1';
-
-  root.appendChild(lineRoot);
-  root.appendChild(margin);
-
-  return root;
-}
-
-function createLineCommentElement(text: string, time: string) {
-  const lineComment = document.createElement('div');
-  lineComment.classList.add('linecomment');
-
-  const lineCommentFrame = document.createElement('div');
-  lineCommentFrame.classList.add('linecommentframe');
-
-  const lineCommentText = document.createElement('div');
-  lineCommentText.classList.add('linecommenttext');
-  lineCommentText.textContent = text;
-
-  const lineTime = document.createElement('div');
-  lineTime.classList.add('linetime');
-  lineTime.textContent = time;
-  
-  lineCommentFrame.appendChild(lineCommentText);
-  lineComment.appendChild(lineCommentFrame);
-  lineComment.appendChild(lineTime);
-
-  return lineComment;
-}
+import { TextField, Text } from '@radix-ui/themes'
 
 const width = 1290;
 const height = 2796;
@@ -106,7 +48,7 @@ function App() {
     <>
       <div>
         <input type='file' accept='image/*' onChange={onFileInputChange} />
-        <img ref={foodImgRef} style={{ width: 300 }} />
+        {foodImage && <img ref={foodImgRef} src={foodImage} style={{ width: 300 }} />}
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, marginBottom: 8}}>
           <Text size='2' color='gray'>料理名</Text>
           <TextField.Root placeholder='魔法の壺プリン' value={foodName} onChange={e => setFoodName(e.target.value)} />
